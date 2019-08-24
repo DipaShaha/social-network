@@ -22,6 +22,7 @@ mongoose
 //start bring in routes
 const postRoutes=require("./routes/post");
 const authRoutes=require("./routes/auth");
+const userRoutes=require("./routes/user");
 
 //end bring in routes
 
@@ -34,6 +35,12 @@ app.use(cookieParser());
 	//use route middleware
 app.use("/",postRoutes);
 app.use("/",authRoutes);
+app.use("/",userRoutes);
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({error:"unauthorized"});
+  }
+});
 
 //end use middleware
 

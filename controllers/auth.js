@@ -1,5 +1,6 @@
 const User= require("../models/user"); 
 const jwt= require('jsonwebtoken');
+const expressjwt= require('express-jwt');
 require('dotenv').config();
  
 exports.signUp= async (req,res)=>{
@@ -21,7 +22,7 @@ exports.signUp= async (req,res)=>{
 };
 
 
-exports.signin=(req,res)=>{
+exports.signIn=(req,res)=>{
 	//find the user based on email
     const {email,password}=req.body;
     User.findOne({email},(err,user)=>{
@@ -38,7 +39,7 @@ exports.signin=(req,res)=>{
     		})
     	}
     	// generate with token user_id and secret
-    	const token= jwt.sign({_id:user_id},process.env.JWT_SECRET);
+    	const token= jwt.sign({_id:user._id},process.env.JWT_SECRET);
 
     	//process the toekn as t in cookie  with expiry date for server side
     	res.cookie("t",token,{ecpire:new Date()+9999});
@@ -48,3 +49,16 @@ exports.signin=(req,res)=>{
     	return res.json({token,user:{_id,email,name}});
     })	
 }
+
+
+exports.signOut=(req,res)=>{
+	res.clearCookie("t");
+	return res.status(200).json({msg:"Successfully Logged out"});
+}
+
+exports.requireSignIn=expressjwt({
+	//if the secret token is valid then the jwt opens the verified user id 
+	//in an auth key in a required object
+	secret:process.env.JWT_SECRET,
+	userProperty:"auth"
+})
