@@ -1,0 +1,18 @@
+{
+	"/": "get all posts",
+	"signUp": "signUp",
+	"signIn": "signIn",
+	"signOut": "signOut",
+
+	"users":"get all users",
+	"user/:userId":"get user",
+	"user/:userId":"update user",
+	"user/:userId":"delete user",
+
+
+	"posts":"get all posts",
+	"post/new/:userId":"create new post",
+	"post/by/:userId":"get post by user",
+	"post/:postId":"update post",
+	"post/:postId":"delete post",
+}

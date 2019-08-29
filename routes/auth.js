@@ -41,7 +41,8 @@ router.post('/signUp',
       
     }
        signUp(req,res);
-});
+  }
+);
 
 
 router.post('/signIn',signIn);
@@ -53,5 +54,3 @@ router.param("userId",userById);
 
 
 module.exports = router;
-// router.post('/post',validator.createPostValidator,postController.createPosts);
-// module.exports = router;
